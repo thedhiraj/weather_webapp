@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Weather App</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="icons/css/all.min.css">
+    <link rel="stylesheet" href="animate_css/animate/animate.min.css">
+
+    <style type="text/css">
+        * {
+            font-family: 'Varela Round', sans-serif;
+        }
+        
+        body {
+            font-size: calc(14px + (26 - 14) * ((100vw - 300px) / (1600 - 300)));
+            background: #070707;
+            /* fallback for old browsers */
+            background: -webkit-linear-gradient(to left, #414345, #232526);
+            /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to left, #414345, #232526);
+        }
+        
+        div.tempreture {
+            line-height: .9;
+        }
+        
+        #cityname {
+            font-size: 2em;
+            line-height: 1.0;
+        }
+        
+        .wproperty {
+            line-height: 0.8;
+            font-size: .7em;
+        }
+        
+        h4 {
+            line-height: .8;
+            font-size: .8em;
+        }
+        
+        #temp {
+            font-size: 4em;
+        }
+        
+        #envo {
+            margin-top: -32px;
+            font-size: 1.3em;
+        }
+        
+        .celcius {
+            position: absolute;
+            font-size: 1.8em;
+            margin-left: 30px;
+            line-height: 0.1;
+        }
+        
+        .modal {
+            animation: zoomIn;
+            animation-duration: .7s;
+        }
+        
+        .modal-dialog {
+            box-shadow: 2px 2px 18px 2px rgb(184, 180, 152);
+            border: 0;
+        }
+        
+        @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap");
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col col-sm-8 col-md-8 col-lg-8  mx-auto">
+                <div class="card mt-5 text-center bg-dark text-light border-0" style="box-shadow: 1px 1px 18px 1px rgb(196, 160, 118);">
+                    <div class="card-header bg-light text-dark">
+                        Weather App
+                    </div>
+                    <div class="card-body">
+                        <input type="text" class="mt-5 form-control text-center bg-dark text-light" id="city" placeholder="Enter City Name">
+                        <br>
+                        <div class="row">
+                            <div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12 d-inline">
+                                <input type="button" class="btn btn-outline-light citees" id="mumbai" value="Mumbai">
+                                <input type="button" class="btn btn-outline-light citees" id="delhi" value="Delhi">
+                                <input type="button" class="btn btn-outline-light citees" id="beed" value="Beed">
+                                <input type="button" class="btn btn-outline-light citees" id="nashik" value="Nashik">
+                                <input type="button" class="btn btn-outline-light citees" id="pune" value="Pune">
+                            </div>
+                        </div>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-outline-success mx-auto mt-5" id="show">
+                            Show weather
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section>
+        <!-- Modal -->
+        <div class="modal   fade " id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+            <div class="modal-dialog   modal-xl border-0 " role="document">
+                <div class="modal-content">
+                    <div class="modal-header  border-0 mt-0 ">
+                        <button type="button" class="close " data-dismiss="modal" id="clo" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body border-0">
+                        <div class="row">
+                            <div class="col col-sm-12 col-lg-12 mx-auto  ">
+                                <div class="row ">
+                                    <div class="col col-sm-6 col-md-6 col-lg-5 offset-lg-1 text-center  ">
+                                        <div id="div1 " class="mb-3  ">
+                                            <label class="city  mt-1" id="cityname"></label>
+                                            <i class="fas fa-map-marker-alt">
+                                            </i>
+                                            <!-- <h2 id="day">SunDay</h2> -->
+                                            <h4 id="dat"> jan 2021</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col col-sm-6 col-md-6 col-lg-5 offset-lg-1  ">
+                                        <div class="wproperty  ">
+                                            <label class="humudity mt-3">AIR PRESSURE
+                                                &nbsp;<span>:</span>&nbsp;</label><span id="pressuer"></span><br>
+                                            <label class="humudity  mt-1">WIND SPEED &nbsp;<span
+                                                    style="margin-left: 10px;">:</span>&nbsp;</label><span id="wspeed"></span><br>
+                                            <label class="humudity  mt-1">HUMIDITY &nbsp;&nbsp;<span
+                                                    style="margin-left: 23px;">:</span>&nbsp;</label><span id="humdt"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row symbols mt-5">
+                                    <div class="col col-sm-4 col-md-5 col-lg-5 offset-sm-1 text-center  ">
+                                        <div class="tempreture mx-auto">
+                                            <span class="celcius">
+                                                &#8451;
+                                            </span>
+                                            <p id="temp"></p>
+                                            <p id="wether" style="font-size: 1em;"> </p>
+                                        </div>
+                                    </div>
+                                    <div class="col col-sm-6 col-md-5 col-lg-5 offset-sm-1 ">
+                                        <div class="card  border-0 " id="envo">
+                                            <div class="card-body ">
+                                                <label for=""><i class="fas fa-cloud-sun "></i>
+                                                     :
+                                                    &nbsp;<span id="clear">0%</span></label><br>
+                                                <label for=""><i class="fas fa-cloud"></i>
+                                                    :
+                                                    &nbsp;<span id="clod">0%</span></label><br>
+                                                <label for=""><i class="fas fa-cloud-showers-heavy"></i>:
+                                                    &nbsp;<span id="rain">0%</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end -->
+                        <div class="row">
+                            <div class="col col-sm-6 col-lg-5 offset-lg-1">
+                                <div class=" card text-center border-0" style="font-size: .6em;">
+                                    <p class=" border-0 ">
+                                        <label for="">sunrise:<span id="time"></span></label>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col col-sm-6 col-lg-5 offset-lg-1">
+                                <div class=" card text-center border-0" style="font-size: .6em;">
+                                    <p class=" border-0 ">
+                                        <label for="" style="display: flex;"> sunset:<span id="time1"></span>
+                                        </label>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+        $(function() {
+            // random city generate
+            $("#mumbai").click(function() {
+                $("#mumbai").val();
+                $("#city").val($("#mumbai").val());
+            });
+            $("#delhi").click(function() {
+                $("#delhi").val();
+                $("#city").val($("#delhi").val());
+            });
+            $("#beed").click(function() {
+                $("#beed").val();
+                $("#city").val($("#beed").val());
+            });
+            $("#nashik").click(function() {
+                $("#nashik").val();
+                $("#city").val($("#nashik").val());
+            });
+            $("#pune").click(function() {
+                $("#pune").val();
+                $("#city").val($("#pune").val());
+            });
+            //end
+            let abc;
+            $("#show").on("click", function() {
+                let city = $('#city').val();
+                if (city !== "") {
+                    $('#modelId').modal({
+                        show: true
+                    });
+                    $.ajax(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=5788e4564138989b6c9fa919d90cdf2b`, {
+
+                        type: "GET",
+
+                        success: function(data) {
+                            var d = new Date();
+                            var n = d.toDateString();
+                            $("#dat").html(n);
+
+                            $("#cityname").html(city);
+                            let temp = (data.main.temp_min) - 273.15;
+                            temp = Math.floor(temp);
+                            $("#temp").html(temp);
+                            $("#pressuer").html(data.main.pressure);
+                            $("#humdt").html(data.main.humidity);
+                            $("#wspeed").html(data.wind.speed);
+                            $("#wether").html(data.weather[0].main);
+                            // console.log(data.weather[0].main);
+
+                            $("#clod").html(data.clouds.all + "%");
+                            // console.log(data);
+
+                            if ((data.weather[0].description == "clear sky") || (data.weather[0].description == "haze")) {
+                                $("#clear").html("100%");
+                            } else if ((data.weather[0].description == "moderate rain") || (data.weather[0].description == "rain") || (data.weather[0].description == "light rain")) {
+                                $("#rain").html("94%");
+                            }
+                            let iconurl = "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
+
+                            $(".modal-body").css("background", "transparent url('" + iconurl + "') no-repeat left top  ");
+                            // ........showing time and date..........
+                            var date = $.parseJSON(data.sys.sunrise);
+                            newon = new Date(1000 * date);
+                            $("#time").html(newon.toLocaleString());
+                            var date1 = $.parseJSON(data.sys.sunset);
+                            newon1 = new Date(1000 * date1);
+                            $("#time1").html(newon1.toLocaleString());
+                            // ..........end..........
+                        },
+                        error: function(err) {
+                            console.log(err);
+                        },
+                    });
+
+                } else {
+                    $('#modelId').modal({
+                        show: false
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
